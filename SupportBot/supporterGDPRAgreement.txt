@@ -1,0 +1,5 @@
+﻿This is the message that will be displayed to users who have been signed up as support providers.
+
+You should replace this text with the support provider agreement.
+
+The user will be asked to respond "I Accept" to this message.
