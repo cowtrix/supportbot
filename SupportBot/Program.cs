@@ -33,6 +33,7 @@ namespace SupportBot
 			m_dataPath = path;
 			Data = JsonConvert.DeserializeObject<ProgramData>(File.ReadAllText(m_dataPath));
 			Logger.Info($"Loaded data from {m_dataPath}");
+			Logger.Info($"Admins: \n" + string.Join("\n", Data.Administrators));
 			return true;
 		}
 
