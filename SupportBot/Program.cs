@@ -140,18 +140,26 @@ namespace SupportBot
 			var userID = e.Message.From.Id;
 			Logger.Debug($"Message from {userID}: {messageContent}");
 
-			// Check if user is admin adding new Support Provider
-			if(Data.Administrators.Contains(userID) && messageContent == "/addnew")
-			{
-				var newCode = KeyGenerator.GetUniqueKey(32);
-				Data.SupportProviderTokens.Add(newCode);
-				await Bot.SendTextMessageAsync(userID, Resources.AdminNewSupportProviderToken);
-				await Bot.SendTextMessageAsync(userID, newCode);
-				return;
-			}
-
 			// Check if user is a support provider
 			var sup = Data.SupportProviders.SingleOrDefault(s => s.TelegramID == userID);
+
+			// Check if user is admin adding new Support Provider
+			if (Data.Administrators.Contains(userID))
+			{
+				if(messageContent == "/addnew")
+				{
+					var newCode = KeyGenerator.GetUniqueKey(32);
+					Data.SupportProviderTokens.Add(newCode);
+					await Bot.SendTextMessageAsync(userID, Resources.AdminNewSupportProviderToken);
+					await Bot.SendTextMessageAsync(userID, newCode);
+					return;
+				}
+				if(sup == null)
+				{
+					sup = new SupportProvider(e.Message.From);
+				}
+			}
+
 			if (Data.SupportProviderTokens.Contains(messageContent))
 			{
 				// Redeem support provider
