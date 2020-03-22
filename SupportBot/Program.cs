@@ -157,6 +157,7 @@ namespace SupportBot
 				if(sup == null)
 				{
 					sup = new SupportProvider(e.Message.From);
+					Data.SupportProviders.Add(sup);
 					await Bot.SendTextMessageAsync(userID, Resources.AdminHelp);
 				}
 			}

@@ -28,7 +28,6 @@ namespace SupportBot.Tickets
 			new ConfigVariable<string>("ClientGDPRAgreementPath", "clientGDPRAgreement.txt");
 
 		public DateTime DateCreated { get; set; }
-		public DateTime LastMessage => Messages.Last().Timestamp;
 		[JsonProperty(ItemIsReference = true)]
 		public SupportProvider Owner { get; set; }
 		public List<Message> Messages { get; set; }
