@@ -59,7 +59,7 @@ namespace SupportBot
 					{
 						throw new FileNotFoundException($"Failed to save data to {m_dataPath}!");
 					}
-					Logger.Debug($"Saved data to {m_dataPath}");
+					//Logger.Debug($"Saved data to {m_dataPath}");
 					await Task.Delay(TimeSpan.FromSeconds(30));
 				}
 			});
