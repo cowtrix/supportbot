@@ -21,6 +21,7 @@ namespace SupportBot
 		public static string AdminNewSupportProviderToken => String("AdminNewSupportProviderToken");
 		public static string SupportProviderTokenRedeemed => String("SupportProviderTokenRedeemed");
 		public static string SupportProviderTokenAlreadyRedeemed => String("SupportProviderTokenAlreadyRedeemed");
+		public static string AdminHelp => String("AdminHelp");
 
 		private static ConfigVariable<Dictionary<string, string>> m_resourceStrings = new ConfigVariable<Dictionary<string, string>>("ResourceStrings",
 			new Dictionary<string, string>()
@@ -40,6 +41,7 @@ namespace SupportBot
 				{ "AdminNewSupportProviderToken", "Tell the user you want to be registered as a new Support Provider to send me the following one-time code:" },
 				{ "SupportProviderTokenRedeemed", "Congratulations, you've successfully registered as a Support Provider!" },
 				{ "SupportProviderTokenAlreadyRedeemed", "It looks like you are already a Support Provider." },
+				{ "AdminHelp", "It looks like you're an administrator. That means you can add new Support Providers by sending the /addnew command. This will generate a one-time code that you should tell the new Support Provider to send to the bot." },
 			});
 
 		public static string String(string key)
