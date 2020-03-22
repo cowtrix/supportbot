@@ -13,5 +13,7 @@ namespace SupportBot
 
 		public List<SupportProvider> SupportProviders = new List<SupportProvider>();
 		public List<Ticket> Tickets = new List<Ticket>();
+		public List<string> SupportProviderTokens = new List<string>();
+		public List<int> Administrators = new List<int>();
 	}
 }

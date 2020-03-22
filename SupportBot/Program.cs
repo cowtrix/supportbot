@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.Config;
+using Common.Security;
 using Newtonsoft.Json;
 using SupportBot.SupportProviders;
 using SupportBot.Tickets;
@@ -132,9 +133,34 @@ namespace SupportBot
 			var userID = e.Message.From.Id;
 			Logger.Debug($"Message from {userID}: {messageContent}");
 
+			// Check if user is admin adding new Support Provider
+			if(Data.Administrators.Contains(userID) && messageContent == "/addnew")
+			{
+				var newCode = KeyGenerator.GetUniqueKey(32);
+				Data.SupportProviderTokens.Add(newCode);
+				await Bot.SendTextMessageAsync(userID, Resources.AdminNewSupportProviderToken);
+				await Bot.SendTextMessageAsync(userID, newCode);
+				return;
+			}
 
 			// Check if user is a support provider
 			var sup = Data.SupportProviders.SingleOrDefault(s => s.TelegramID == userID);
+			if (Data.SupportProviderTokens.Contains(messageContent))
+			{
+				// Redeem support provider
+				if(sup == null)
+				{
+					Data.SupportProviderTokens.Remove(messageContent);
+					sup = new SupportProvider(e.Message.From);
+					Data.SupportProviders.Add(sup);
+					await Bot.SendTextMessageAsync(userID, Resources.SupportProviderTokenRedeemed);
+				}
+				else
+				{
+					await Bot.SendTextMessageAsync(userID, Resources.SupportProviderTokenAlreadyRedeemed);
+				}
+			}
+
 			if (sup != null)
 			{
 				await sup.HandleMessage(sender, e);

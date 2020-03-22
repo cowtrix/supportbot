@@ -18,6 +18,9 @@ namespace SupportBot
 		public static string UserQueueUpdate => String("UserQueueUpdate");
 		public static string UserTicketIsAccepted => String("UserTicketIsAccepted");
 		public static string SupportUserBeatenInClaim => String("SupportUserBeatenInClaim");
+		public static string AdminNewSupportProviderToken => String("AdminNewSupportProviderToken");
+		public static string SupportProviderTokenRedeemed => String("SupportProviderTokenRedeemed");
+		public static string SupportProviderTokenAlreadyRedeemed => String("SupportProviderTokenAlreadyRedeemed");
 
 		private static ConfigVariable<Dictionary<string, string>> m_resourceStrings = new ConfigVariable<Dictionary<string, string>>("ResourceStrings",
 			new Dictionary<string, string>()
@@ -34,6 +37,9 @@ namespace SupportBot
 				{ "UserQueueUpdate", "You are number {0} in the queue. Thank you for waiting." },
 				{ "UserTicketIsAccepted", "You've been connected to {0}." },
 				{ "SupportUserBeatenInClaim", "Sorry, someone else claimed the ticket before you. Please wait for the next one." },
+				{ "AdminNewSupportProviderToken", "Tell the user you want to be registered as a new Support Provider to send me the following one-time code:" },
+				{ "SupportProviderTokenRedeemed", "Congratulations, you've successfully registered as a Support Provider!" },
+				{ "SupportProviderTokenAlreadyRedeemed", "It looks like you are already a Support Provider." },
 			});
 
 		public static string String(string key)
