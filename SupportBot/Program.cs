@@ -53,9 +53,13 @@ namespace SupportBot
 			{
 				while (true)
 				{
-					await Task.Delay(TimeSpan.FromSeconds(30));
 					File.WriteAllText(m_dataPath, JsonConvert.SerializeObject(Data, Formatting.Indented));
+					if(!File.Exists(m_dataPath))
+					{
+						throw new FileNotFoundException($"Failed to save data to {m_dataPath}!");
+					}
 					Logger.Debug($"Saved data to {m_dataPath}");
+					await Task.Delay(TimeSpan.FromSeconds(30));
 				}
 			});
 			saveTask.Start();

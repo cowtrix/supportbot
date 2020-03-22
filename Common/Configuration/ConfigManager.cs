@@ -69,6 +69,7 @@ namespace Common.Config
 #if DEBUG
 		const string m_sampleConfigPath = @"config.sample.json";
 		static Dictionary<string, object> m_sampleData = new Dictionary<string, object>();
+		[Command("^saveconfig", "", "")]
 		internal static void Register<T>(ConfigVariable<T> configVariable)
 		{
 			m_sampleData[configVariable.ConfigKey] = configVariable.DefaultValue;
