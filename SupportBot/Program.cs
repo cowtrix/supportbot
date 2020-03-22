@@ -1,4 +1,5 @@
 ﻿using Common;
+using Common.Commands;
 using Common.Config;
 using Common.Security;
 using Newtonsoft.Json;
@@ -53,7 +54,7 @@ namespace SupportBot
 				while (true)
 				{
 					await Task.Delay(TimeSpan.FromSeconds(30));
-					//File.WriteAllText(m_dataPath, JsonConvert.SerializeObject(Data, Formatting.Indented));
+					File.WriteAllText(m_dataPath, JsonConvert.SerializeObject(Data, Formatting.Indented));
 					Logger.Debug($"Saved data to {m_dataPath}");
 				}
 			});
@@ -89,6 +90,7 @@ namespace SupportBot
 			while (true)
 			{
 				var input = Console.ReadLine();
+				CommandManager.Execute(input);
 			}
 		}
 
