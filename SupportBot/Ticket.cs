@@ -109,6 +109,7 @@ namespace SupportBot.Tickets
 			if(Owner != null)
 			{
 				await Bot.SendTextMessageAsync(Owner.TelegramID, Resources.SupportUserTicketClosed);
+				await SupportProvider.ICantHelpAnymore(Owner.TelegramID);
 				Owner.State = ESupportProviderState.WAITING_FOR_TICKETS;
 			}
 			foreach(var shuffledTicket in Data.OpenTickets)

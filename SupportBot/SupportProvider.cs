@@ -88,6 +88,7 @@ namespace SupportBot.SupportProviders
 			else
 			{
 				await Bot.SendTextMessageAsync(userID, Resources.SupportUserNoActiveTicket);
+				await ICantHelpAnymore(userID);
 				return;
 			}
 		}
@@ -180,7 +181,7 @@ namespace SupportBot.SupportProviders
 			await Bot.SendTextMessageAsync(id, Resources.SupportUserHelp, replyMarkup: rkm);
 		}
 
-		private static async Task ICantHelpAnymore(int id)
+		public static async Task ICantHelpAnymore(int id)
 		{
 			// Let them wait
 			var rkm2 = new InlineKeyboardMarkup(new InlineKeyboardButton() { Text = "I Want To Stop Helping For Now", CallbackData = HELP_STOP_TOKEN });
