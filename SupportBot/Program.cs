@@ -21,6 +21,7 @@ namespace SupportBot
 		public static TelegramBotClient Bot { get; private set; }
 
 		private static ConfigVariable<string> m_botKey = new ConfigVariable<string>("TelegramBotToken", "");
+		private static ConfigVariable<int[]> m_admins = new ConfigVariable<int[]>("Administrators", new int[0]);
 		private static string m_dataPath;
 
 		static bool LoadFromFile(string path)
@@ -33,7 +34,7 @@ namespace SupportBot
 			m_dataPath = path;
 			Data = JsonConvert.DeserializeObject<ProgramData>(File.ReadAllText(m_dataPath));
 			Logger.Info($"Loaded data from {m_dataPath}");
-			Logger.Info($"Admins: \n" + string.Join("\n", Data.Administrators));
+			Logger.Info($"Admins: \n" + string.Join("\n", m_admins.Value));
 			return true;
 		}
 
@@ -44,11 +45,6 @@ namespace SupportBot
 				Logger.Warning($"No data path specified, new bot...");
 				m_dataPath = Path.GetFullPath("data.json");
 				Data = new ProgramData();
-				Data.SupportProviders.Add(new SupportProvider()
-				{
-					TelegramID = 834876848,
-					Name = "Sean",
-				});
 			}
 			Task saveTask = new Task(async () =>
 			{
@@ -59,7 +55,6 @@ namespace SupportBot
 					{
 						throw new FileNotFoundException($"Failed to save data to {m_dataPath}!");
 					}
-					//Logger.Debug($"Saved data to {m_dataPath}");
 					await Task.Delay(TimeSpan.FromSeconds(30));
 				}
 			});
@@ -144,7 +139,7 @@ namespace SupportBot
 			var sup = Data.SupportProviders.SingleOrDefault(s => s.TelegramID == userID);
 
 			// Check if user is admin adding new Support Provider
-			if (Data.Administrators.Contains(userID))
+			if (m_admins.Value.Any(u => u == userID))
 			{
 				if(messageContent == "/addnew")
 				{
