@@ -53,3 +53,13 @@ If there are no open tickets available, you will be placed in a waiting state. W
 You can only have one active ticket at a time. When you are connected to a user, their messages will be rerouted through the bot and vice-versa for your messages. **The first name** of your Telegram profile will be used in an introductory message to the user when youa re connected.
 
 If you wish to close your current ticket at any time, all you need to do is use the command `/endchat`. You will then be put back into the waiting state where you can either say you do not want to take any more tickets, or can claim another ticket if there are any.
+
+### What data is stored?
+
+All data is stored in the data JSON file. By default this is called `data.json` and is created automatically in the build location. You can pass a custom data JSON file path through a command argument to the executable.
+
+Full message logs for every ticket are stored indefinitely. Tickets are not deleted upon completion. Users are identified by their Telegram ID. Messages are unobfuscated and may contain sensitive information.
+
+A Support Provider's first name - as it appears in their Telegram profile - and Telegram ID will be stored.
+
+In the near future there should be a way to delete a user's data to comply with any GDPR requests. This feature may even be implemented automatically via a command.
