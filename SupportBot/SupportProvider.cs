@@ -62,6 +62,7 @@ namespace SupportBot.SupportProviders
 			else if(State == ESupportProviderState.WAITING_FOR_TICKETS)
 			{
 				await Bot.SendTextMessageAsync(userID, Resources.SupportUserNoActiveTicket);
+				await ICantHelpAnymore(userID);
 				return;
 			}
 			else if (State == ESupportProviderState.IN_PROGRESS)
@@ -72,6 +73,7 @@ namespace SupportBot.SupportProviders
 				{
 					// User doesn't have an active ticket
 					await Bot.SendTextMessageAsync(userID, Resources.SupportUserNoActiveTicket);
+					await ICantHelpAnymore(userID);
 					State = ESupportProviderState.WAITING_FOR_TICKETS;
 					return;
 				}
