@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using SupportBot.SupportProviders;
 using SupportBot.Tickets;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace SupportBot
 		public static TelegramBotClient Bot { get; private set; }
 
 		private static ConfigVariable<string> m_botKey = new ConfigVariable<string>("TelegramBotToken", "");
-		private static ConfigVariable<int[]> m_admins = new ConfigVariable<int[]>("Administrators", new int[0]);
+		private static ConfigVariable<List<int>> m_admins = new ConfigVariable<List<int>>("Administrators", new List<int>());
 		private static string m_dataPath;
 
 		static bool LoadFromFile(string path)
