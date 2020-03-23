@@ -2,11 +2,13 @@
 using SupportBot.Tickets;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace SupportBot
 {
 	public class ProgramData
 	{
+		[JsonIgnore]
 		public IEnumerable<Ticket> OpenTickets => Tickets
 			.Where(t => t.State == ETicketState.WAIT_IN_QUEUE)
 			.OrderBy(t => t.DateCreated);
