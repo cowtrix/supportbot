@@ -39,6 +39,15 @@ namespace SupportBot
 			return true;
 		}
 
+		static void SaveToFile(string path)
+		{
+			File.WriteAllText(path, JsonConvert.SerializeObject(Data, Formatting.Indented));
+			if (!File.Exists(path))
+			{
+				throw new FileNotFoundException($"Failed to save data to {path}!");
+			}
+		}
+
 		static async Task Main(string[] args)
 		{
 			if ((args.Length > 0 && !LoadFromFile(args[0])) || !LoadFromFile("data.json"))
@@ -51,11 +60,7 @@ namespace SupportBot
 			{
 				while (true)
 				{
-					File.WriteAllText(m_dataPath, JsonConvert.SerializeObject(Data, Formatting.Indented));
-					if(!File.Exists(m_dataPath))
-					{
-						throw new FileNotFoundException($"Failed to save data to {m_dataPath}!");
-					}
+					SaveToFile(m_dataPath);
 					await Task.Delay(TimeSpan.FromSeconds(30));
 				}
 			});
@@ -211,6 +216,13 @@ namespace SupportBot
 			m_admins.Value = newAdmins;
 			Logger.Info($"Added admin {id}");
 			await Bot.SendTextMessageAsync(id, "You've been added as an administrator");
+		}
+
+		[Command("^shutdown", "shutdown", "Save and shutdown")]
+		public static async Task Shutdown(CommandArguments args)
+		{
+			SaveToFile(m_dataPath);
+			Environment.Exit(0);
 		}
 	}
 }
