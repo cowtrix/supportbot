@@ -74,7 +74,9 @@ namespace SupportBot.Tickets
 			}
 			else if (State == ETicketState.IN_PROGRESS)
 			{
+				Logger.Debug($"Forwarding message from {Target} to {Owner.TelegramID}");
 				await Bot.SendTextMessageAsync(Owner.TelegramID, $"User: {e.Message.Text}");
+				return;
 			}
 		}
 

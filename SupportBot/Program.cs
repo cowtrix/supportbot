@@ -69,7 +69,7 @@ namespace SupportBot
 			// Hack, remove soon
 			if (Data.Tickets.Any(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)))
 			{
-				Data.Tickets = Data.Tickets.Where(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
+				Data.Tickets = Data.Tickets.Where(t => !Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
 				Logger.Warning("Successfully removed bad tickets");
 			}
 
@@ -192,7 +192,7 @@ namespace SupportBot
 					await Bot.SendTextMessageAsync(userID, Resources.SupportProviderTokenAlreadyRedeemed);
 				}
 				// Remove any open tickets by new SP
-				Data.Tickets = Data.Tickets.Where(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
+				Data.Tickets = Data.Tickets.Where(t => !Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
 			}
 
 			if (sup != null)
