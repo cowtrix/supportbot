@@ -51,7 +51,7 @@ namespace SupportBot.Tickets
 			{
 				// New ticker -> user must accept GDPR agreement
 				var rkm = new InlineKeyboardMarkup(new InlineKeyboardButton() { Text = "I Accept", CallbackData = ACCEPT_TOKEN });
-				await Bot.SendTextMessageAsync(userID, File.ReadAllText(m_clientGDRPPath.Value), replyMarkup: rkm);
+				await Bot.SendTextMessageAsync(userID, File.ReadAllText(m_clientGDRPPath.Value), replyMarkup: rkm, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
 				State = ETicketState.WAITING_FOR_AGREEMENT;
 				return;
 			}

@@ -49,7 +49,7 @@ namespace SupportBot.SupportProviders
 			{
 				// New ticket -> user must accept GDPR agreement
 				var rkm = new InlineKeyboardMarkup(new InlineKeyboardButton() { Text = "I Accept", CallbackData = ACCEPT_TOKEN });
-				await Bot.SendTextMessageAsync(userID, System.IO.File.ReadAllText(m_supporterGDRPPath.Value), replyMarkup: rkm);
+				await Bot.SendTextMessageAsync(userID, System.IO.File.ReadAllText(m_supporterGDRPPath.Value), replyMarkup: rkm, parseMode: Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
 				State = ESupportProviderState.WAITING_FOR_AGREEMENT;
 				return;
 			}
