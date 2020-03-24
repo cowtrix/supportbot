@@ -58,19 +58,22 @@ namespace SupportBot.Tickets
 			else if(State == ETicketState.WAITING_FOR_AGREEMENT)
 			{
 				await Bot.SendTextMessageAsync(userID, Resources.RePromptForAgreement);
+				return;
 			}
-			else if(State == ETicketState.WAIT_IN_QUEUE)
+
+			if (e.Message.Text == "/endchat")
+			{
+				await Close();
+				return;
+			}
+
+			if (State == ETicketState.WAIT_IN_QUEUE)
 			{
 				await SendQueueUpdate();
 				return;
 			}
 			else if (State == ETicketState.IN_PROGRESS)
 			{
-				if (e.Message.Text == "/endchat")
-				{
-					await Close();
-					return;
-				}
 				await Bot.SendTextMessageAsync(Owner.TelegramID, $"User: {e.Message.Text}");
 			}
 		}
