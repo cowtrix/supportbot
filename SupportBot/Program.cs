@@ -61,6 +61,9 @@ namespace SupportBot
 			});
 			saveTask.Start();
 
+			// Hack, remove soon
+			Data.Tickets = Data.Tickets.Where(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
+
 			var token = m_botKey.Value;
 			if (string.IsNullOrEmpty(token))
 			{
@@ -179,6 +182,8 @@ namespace SupportBot
 				{
 					await Bot.SendTextMessageAsync(userID, Resources.SupportProviderTokenAlreadyRedeemed);
 				}
+				// Remove any open tickets by new SP
+				Data.Tickets = Data.Tickets.Where(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
 			}
 
 			if (sup != null)

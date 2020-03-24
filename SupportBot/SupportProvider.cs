@@ -83,6 +83,7 @@ namespace SupportBot.SupportProviders
 					return;
 				}
 				// Just forward the message onwards
+				Logger.Debug($"Forwarding message from {e.Message.ForwardFrom.Id} ");
 				activeTicket.Messages.Add(new Message(userID, e.Message.Text));
 				await Bot.SendTextMessageAsync(activeTicket.Target, $"{Name}: {e.Message.Text}");
 				return;
