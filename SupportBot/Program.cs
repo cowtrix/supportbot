@@ -67,7 +67,11 @@ namespace SupportBot
 			saveTask.Start();
 
 			// Hack, remove soon
-			Data.Tickets = Data.Tickets.Where(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
+			if (Data.Tickets.Any(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)))
+			{
+				Data.Tickets = Data.Tickets.Where(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)).ToList();
+				Logger.Warning("Successfully removed bad tickets");
+			}
 
 			var token = m_botKey.Value;
 			if (string.IsNullOrEmpty(token))
