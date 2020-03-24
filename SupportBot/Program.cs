@@ -106,6 +106,9 @@ namespace SupportBot
 			var userID = e.CallbackQuery.From.Id;
 			Logger.Debug($"Callback from {userID}: {e.CallbackQuery.Data}");
 
+			// delete button on press
+			await Bot.EditMessageReplyMarkupAsync(e.CallbackQuery.Message.Chat.Id, e.CallbackQuery.Message.MessageId);
+
 			// Check if user is a support provider
 			var sup = Data.SupportProviders.SingleOrDefault(s => s.TelegramID == userID);
 			if (sup != null)

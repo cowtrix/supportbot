@@ -81,7 +81,6 @@ namespace SupportBot.Tickets
 		public override async Task HandleCallback(object sender, CallbackQueryEventArgs e)
 		{
 			var userID = e.CallbackQuery.From.Id;
-			//Messages.Add(new Message(userID, e.CallbackQuery.Data));
 			if (State == ETicketState.WAITING_FOR_AGREEMENT)
 			{
 				// We want the user to accept the agreement

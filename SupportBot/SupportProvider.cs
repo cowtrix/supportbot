@@ -113,9 +113,6 @@ namespace SupportBot.SupportProviders
 
 		public override async Task HandleCallback(object sender, CallbackQueryEventArgs e)
 		{
-			// Delete button on press
-			await Bot.EditMessageTextAsync(e.CallbackQuery.Message.Chat.Id, e.CallbackQuery.Message.MessageId, e.CallbackQuery.Message.Text,
-				parseMode:Telegram.Bot.Types.Enums.ParseMode.MarkdownV2);
 			if (State == ESupportProviderState.WAITING_FOR_AGREEMENT)
 			{
 				// We want the user to accept the agreement
