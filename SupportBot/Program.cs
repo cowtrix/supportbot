@@ -135,6 +135,10 @@ namespace SupportBot
 			var messageContent = e.Message.Text;
 			var userID = e.Message.From.Id;
 			Logger.Debug($"Message from {userID}: {messageContent}");
+			if(e.Message.ForwardFrom != null)
+			{
+				Logger.Debug($"Message forwarded from {e.Message.ForwardFrom.Id}");
+			}
 
 			// Check if user is a support provider
 			var sup = Data.SupportProviders.SingleOrDefault(s => s.TelegramID == userID);
@@ -188,6 +192,17 @@ namespace SupportBot
 				Data.Tickets.Add(ticket);
 			}
 			await ticket.HandleMessage(sender, e);
+		}
+
+		[Command("^addadmin", "addadmin /id:<telegramID>", "Add a new administrator")]
+		public static async Task AddAdminCommand(CommandArguments args)
+		{
+			var id = args.MustGetValue<int>("id");
+			var newAdmins = new List<int>(m_admins.Value);
+			newAdmins.Add(id);
+			m_admins.Value = newAdmins;
+			Logger.Info($"Added admin {id}");
+			await Bot.SendTextMessageAsync(id, "You've been added as an administrator");
 		}
 	}
 }
