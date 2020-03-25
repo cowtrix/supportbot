@@ -130,7 +130,7 @@ namespace SupportBot.Tickets
 
 		async Task SendQueueUpdate()
 		{
-			var index = Data.Tickets.IndexOf(this);
+			var index = Data.OpenTickets.ToList().IndexOf(this);
 			await Bot.SendTextMessageAsync(Target, string.Format(Resources.UserQueueUpdate, (index + 1).ToString()));
 		}
 
