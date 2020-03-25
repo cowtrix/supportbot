@@ -10,6 +10,7 @@ namespace SupportBot
 		public static string RePromptForAgreement => String("RePromptForAgreement");
 		public static string SupportUserHelp => String("SupportUserHelp");
 		public static string SupportUserNoActiveTicket => String("SupportUserNoActiveTicket");
+		public static string SupportUserNoTicketsAvailable => String("SupportUserNoTicketsAvailable");
 		public static string SupportUserWaitingForTicket => String("SupportUserWaitingForTicket");
 		public static string SupportUserAcceptTicket => String("SupportUserAcceptTicket");
 		public static string UserTicketClosed => String("UserTicketClosed");
@@ -42,6 +43,7 @@ namespace SupportBot
 				{ "SupportProviderTokenRedeemed", "Congratulations, you've successfully registered as a Support Provider!" },
 				{ "SupportProviderTokenAlreadyRedeemed", "It looks like you are already a Support Provider." },
 				{ "AdminHelp", "It looks like you're an administrator. That means you can add new Support Providers by sending the /addnew command. This will generate a one-time code that you should tell the new Support Provider to send to the bot." },
+				{ "SupportUserNoTicketsAvailable", "There aren't any tickets available right now. When a new ticket arrives, I'll let you know." },
 			});
 
 		public static string String(string key)

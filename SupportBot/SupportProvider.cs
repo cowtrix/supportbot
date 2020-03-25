@@ -117,7 +117,7 @@ namespace SupportBot.SupportProviders
 				foreach (var waiter in claimingSupportProviders)
 				{
 					waiter.State = ESupportProviderState.WAITING_FOR_TICKETS;
-					await Bot.SendTextMessageAsync(waiter.TelegramID, Resources.SupportUserNoActiveTicket);
+					await Bot.SendTextMessageAsync(waiter.TelegramID, Resources.SupportUserNoTicketsAvailable);
 					await ICantHelpAnymore(waiter.TelegramID);
 				}
 			}
