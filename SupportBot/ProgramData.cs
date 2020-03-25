@@ -1,8 +1,8 @@
-﻿using SupportBot.SupportProviders;
+﻿using Newtonsoft.Json;
+using SupportBot.SupportProviders;
 using SupportBot.Tickets;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 
 namespace SupportBot
 {
