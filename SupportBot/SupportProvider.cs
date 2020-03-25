@@ -110,6 +110,17 @@ namespace SupportBot.SupportProviders
 					await Bot.SendTextMessageAsync(waiter.TelegramID, Resources.SupportUserTicketCanBeClaimed, replyMarkup:rkm);
 				}
 			}
+			else
+			{
+				var claimingSupportProviders = Data.SupportProviders
+					.Where(sp => sp.State == ESupportProviderState.WAITING_FOR_CLAIM);
+				foreach (var waiter in claimingSupportProviders)
+				{
+					waiter.State = ESupportProviderState.WAITING_FOR_TICKETS;
+					await Bot.SendTextMessageAsync(waiter.TelegramID, Resources.SupportUserNoActiveTicket);
+					await ICantHelpAnymore(waiter.TelegramID);
+				}
+			}
 		}
 
 		public override async Task HandleCallback(object sender, CallbackQueryEventArgs e)
