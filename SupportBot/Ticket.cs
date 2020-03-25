@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types.InputFiles;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace SupportBot.Tickets
@@ -74,8 +75,8 @@ namespace SupportBot.Tickets
 			}
 			else if (State == ETicketState.IN_PROGRESS)
 			{
-				Logger.Debug($"Forwarding message from {Target} to {Owner.TelegramID}");
-				await Bot.SendTextMessageAsync(Owner.TelegramID, $"User: {e.Message.Text}");
+				Messages.Add(new Message(userID, e.Message.Text));
+				await ForwardMessage(Target, Owner.TelegramID, "User", e);
 				return;
 			}
 		}

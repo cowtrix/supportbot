@@ -85,7 +85,7 @@ namespace SupportBot.SupportProviders
 				// Just forward the message onwards
 				Logger.Debug($"Forwarding message from {e.Message.From.Id} to {activeTicket.Target}");
 				activeTicket.Messages.Add(new Message(userID, e.Message.Text));
-				await Bot.SendTextMessageAsync(activeTicket.Target, $"{Name}: {e.Message.Text}");
+				await ForwardMessage(TelegramID, activeTicket.Target, Name, e);
 				return;
 			}
 			else
