@@ -30,7 +30,7 @@ namespace SupportBot
 				{ "RePromptForAgreement", "Please press the \"I Accept\" button above to proceed." },
 				{ "SupportUserHelp", "When you're ready to take a support ticket, press the \"I Can Help Now\" button below, and you'll be connected with someone needing help. You'll send messages through this chat, and that person will receive those messages from this bot. When you've finished helping someone, say \"/endchat\" and you'll be disconnected." },
 				{ "SupportUserNoActiveTicket", "You don't currently have an open support ticket. Please wait for a new ticket to come in." },
-				{ "SupportUserWaitingForTicket", "There aren't any open support tickets right now, but I'll let you know when there is." },
+				{ "SupportUserWaitingForTicket", "When you'd like to stop being notified of tickets, just press the button below. When a ticket is available to claim, we'll send you another message." },
 				{ "SupportUserAcceptTicket", "You've been connected with a user needing support. Just send messages in this chat and they will receive them. When you're finished providing support, say \"/endchat\"." },
 				{ "UserTicketClosed", "The chat session has been ended. If you need help again, you can just send us another message." },
 				{ "SupportUserTicketClosed", "The chat session has been ended." },
