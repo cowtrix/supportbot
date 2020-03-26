@@ -1,5 +1,5 @@
-﻿This is the message that will be displayed to users starting new support tickets.
+﻿This is the message that will be displayed to users starting new support tickets\.
 
-You should replace this text with the user GDPR agreement.
+You should replace this text with the user GDPR agreement\.
 
-The user will be asked to respond "I Accept" to this message.
+The user will be asked to respond \"I Accept\" to this message\.

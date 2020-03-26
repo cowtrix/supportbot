@@ -88,7 +88,9 @@ namespace Common
 			ConsoleColor prevBack = Console.BackgroundColor;
 			try
 			{
-				//message = $"[{DateTime.Now.ToLocalTime().ToShortTimeString()}]\t{message}";
+
+				OnLog?.Invoke(message, logLevel);
+				message = $"[{DateTime.Now.ToLocalTime().ToString()}]\t{message}";
 				Console.ForegroundColor = foreground;
 				Console.BackgroundColor = background;
 				if(logLevel == ELogLevel.Error)
@@ -99,7 +101,6 @@ namespace Common
 				{
 					Console.WriteLine(message);
 				}
-				OnLog?.Invoke(message, logLevel);
 			}
 			catch (Exception e)
 			{

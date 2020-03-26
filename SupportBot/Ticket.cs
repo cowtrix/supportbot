@@ -91,8 +91,6 @@ namespace SupportBot.Tickets
 				if(e.CallbackQuery.Data == ACCEPT_TOKEN)
 				{
 					await Bot.AnswerCallbackQueryAsync(e.CallbackQuery.Id);
-					await Bot.EditMessageTextAsync(e.CallbackQuery.Message.Chat.Id, e.CallbackQuery.Message.MessageId,
-						e.CallbackQuery.Message.Text);
 					await Bot.SendTextMessageAsync(userID, string.Format(Resources.UserAcceptsAgreement, e.CallbackQuery.From.FirstName));
 					await SendQueueUpdate();
 					State = ETicketState.WAIT_IN_QUEUE;
