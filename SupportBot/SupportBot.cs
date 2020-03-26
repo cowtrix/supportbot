@@ -27,6 +27,10 @@ namespace SupportBot
 
 		static bool LoadFromFile(string path)
 		{
+			if(string.IsNullOrEmpty(path))
+			{
+				return false;
+			}
 			path = Path.GetFullPath(path);
 			if (!File.Exists(path))
 			{
