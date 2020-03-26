@@ -9,8 +9,8 @@ namespace SupportBot
 	public abstract class MessageHandler
 	{
 		public const string ACCEPT_TOKEN = "USER_ACCEPT";
-		protected static ProgramData Data => Program.Data;
-		protected static TelegramBotClient Bot => Program.Bot;
+		protected static ProgramData Data => SupportBot.Data;
+		protected static TelegramBotClient Bot => SupportBot.Bot;
 		public abstract Task HandleCallback(object sender, CallbackQueryEventArgs e);
 		public abstract Task HandleMessage(object sender, MessageEventArgs e);
 

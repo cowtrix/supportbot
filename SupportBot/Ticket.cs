@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.Config;
+using Common.Extensions;
 using Newtonsoft.Json;
 using SupportBot.SupportProviders;
 using System;
@@ -130,7 +131,12 @@ namespace SupportBot.Tickets
 
 		async Task SendQueueUpdate()
 		{
-			var index = Data.OpenTickets.ToList().IndexOf(this);
+			var index = Data.OpenTickets.IndexOf(t => t.Target == Target);
+			if(index == -1)
+			{
+				Logger.Error($"Unexpected queue update for {Target} - no open ticket found");
+				return;
+			}
 			await Bot.SendTextMessageAsync(Target, string.Format(Resources.UserQueueUpdate, (index + 1).ToString()));
 		}
 

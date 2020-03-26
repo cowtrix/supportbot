@@ -16,7 +16,7 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace SupportBot
 {
-	class Program
+	public static class SupportBot
 	{
 		public static ProgramData Data { get; private set; }
 		public static TelegramBotClient Bot { get; private set; }
@@ -48,9 +48,9 @@ namespace SupportBot
 			}
 		}
 
-		static async Task Main(string[] args)
+		public static async Task Initialise(bool dummy = false)
 		{
-			if ((args.Length > 0 && !LoadFromFile(args[0])) || !LoadFromFile("data.json"))
+			if (!LoadFromFile(m_dataPath) || !LoadFromFile("data.json"))
 			{
 				Logger.Warning($"No data path specified, new bot...");
 				m_dataPath = Path.GetFullPath("data.json");
@@ -65,7 +65,6 @@ namespace SupportBot
 				}
 			});
 			saveTask.Start();
-
 			// Hack, remove soon
 			if (Data.Tickets.Any(t => Data.SupportProviders.Any(sp => sp.TelegramID == t.Target)))
 			{
@@ -73,22 +72,25 @@ namespace SupportBot
 				Logger.Warning("Successfully removed bad tickets");
 			}
 
-			var token = m_botKey.Value;
-			if (string.IsNullOrEmpty(token))
+			if(!dummy)
 			{
-				Console.WriteLine("Bot Token: ");
-				token = Console.ReadLine();
+				var token = m_botKey.Value;
+				if (string.IsNullOrEmpty(token))
+				{
+					Console.WriteLine("Bot Token: ");
+					token = Console.ReadLine();
+				}
+				Bot = new TelegramBotClient(token);
+				var me = await Bot.GetMeAsync();
+				Logger.Info($"Logged in as {me.FirstName} ({me.Id})");
+				Bot.OnMessage += HandleMessage;
+				Bot.OnCallbackQuery += HandleCallback;
+				Bot.StartReceiving();
 			}
-			Bot = new TelegramBotClient(token);
-			var me = await Bot.GetMeAsync();
-			Logger.Info($"Logged in as {me.FirstName} ({me.Id})");
-			Bot.OnMessage += HandleMessage;
-			Bot.OnCallbackQuery += HandleCallback;
-			Bot.StartReceiving();
-
+			
 			var thinkTask = new Task(async () =>
 			{
-				while(true)
+				while (true)
 				{
 					await SupportProvider.Think();
 					foreach (var ticket in Data.Tickets.Where(t => t.State != ETicketState.FINISHED))
@@ -107,13 +109,19 @@ namespace SupportBot
 			}
 		}
 
+		static async Task Main(string[] args)
+		{
+			m_dataPath = args.FirstOrDefault();
+			await Initialise();
+		}
+
 		private static void HandleCallback(object sender, CallbackQueryEventArgs e)
 		{
 			var task = new Task(async () => await HandleCallbackAsync(sender, e));
 			task.Start();
 		}
 
-		private static async Task HandleCallbackAsync(object sender, CallbackQueryEventArgs e)
+		public static async Task HandleCallbackAsync(object sender, CallbackQueryEventArgs e)
 		{
 			var userID = e.CallbackQuery.From.Id;
 			Logger.Debug($"Callback from {userID}: {e.CallbackQuery.Data}");
@@ -145,7 +153,7 @@ namespace SupportBot
 			task.Start();
 		}
 
-		private static async Task HandleMessageAsync(object sender, MessageEventArgs e)
+		public static async Task HandleMessageAsync(object sender, MessageEventArgs e)
 		{
 			var messageContent = e.Message.Text;
 			var userID = e.Message.From.Id;
@@ -211,15 +219,12 @@ namespace SupportBot
 			await ticket.HandleMessage(sender, e);
 		}
 
-		[Command("^addadmin", "addadmin /id:<telegramID>", "Add a new administrator")]
+		[Command("^faketicket", "faketicket /id:<telegramID>", "Add a an artifical ticket with the given ID")]
 		public static async Task AddAdminCommand(CommandArguments args)
 		{
 			var id = args.MustGetValue<int>("id");
-			var newAdmins = new List<int>(m_admins.Value);
-			newAdmins.Add(id);
-			m_admins.Value = newAdmins;
-			Logger.Info($"Added admin {id}");
-			await Bot.SendTextMessageAsync(id, "You've been added as an administrator");
+			Data.Tickets.Add(new Ticket(id));
+			Logger.Info($"Added artificial ticket with id {id}");
 		}
 
 		[Command("^shutdown", "shutdown", "Save and shutdown")]

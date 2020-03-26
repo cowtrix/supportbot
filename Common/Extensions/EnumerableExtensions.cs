@@ -57,5 +57,11 @@ namespace Common.Extensions
 				yield return enumerator.Current;
 			}
 		}
+
+		public static int IndexOf<T>(this IEnumerable<T> enumerable, Func<T, bool> criteria)
+		{
+			int index = enumerable.TakeWhile(x => !criteria(item)).Count();
+			return index == enumerable.Count() ? -1 : index;
+		}
 	}
 }
