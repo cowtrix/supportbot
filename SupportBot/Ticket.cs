@@ -92,8 +92,8 @@ namespace SupportBot.Tickets
 				{
 					await Bot.AnswerCallbackQueryAsync(e.CallbackQuery.Id);
 					await Bot.SendTextMessageAsync(userID, string.Format(Resources.UserAcceptsAgreement, e.CallbackQuery.From.FirstName));
-					await SendQueueUpdate();
 					State = ETicketState.WAIT_IN_QUEUE;
+					await SendQueueUpdate();
 				}
 				else
 				{
