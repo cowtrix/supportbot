@@ -60,7 +60,7 @@ namespace Common.Extensions
 
 		public static int IndexOf<T>(this IEnumerable<T> enumerable, Func<T, bool> criteria)
 		{
-			int index = enumerable.TakeWhile(x => !criteria(item)).Count();
+			int index = enumerable.TakeWhile(x => !criteria(x)).Count();
 			return index == enumerable.Count() ? -1 : index;
 		}
 	}
