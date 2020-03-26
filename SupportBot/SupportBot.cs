@@ -54,7 +54,7 @@ namespace SupportBot
 
 		public static async Task Initialise(bool dummy = false)
 		{
-			if (!LoadFromFile(m_dataPath) || !LoadFromFile("data.json"))
+			if (!LoadFromFile(m_dataPath) && !LoadFromFile("data.json"))
 			{
 				Logger.Warning($"No data path specified, new bot...");
 				m_dataPath = Path.GetFullPath("data.json");
