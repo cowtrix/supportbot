@@ -76,7 +76,6 @@ namespace SupportBot.Tickets
 			}
 			else if (State == ETicketState.IN_PROGRESS)
 			{
-				Messages.Add(new Message(userID, e.Message.Text));
 				await ForwardMessage(Target, Owner.TelegramID, "User", e);
 				return;
 			}
